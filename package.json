@@ -1,0 +1,41 @@
+{
+  "name": "mutant-engine",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A body-as-a-graph engine for games: grow, mutate, cut, fight and draw creatures.",
+  "license": "MIT",
+  "workspaces": [
+    "packages/core",
+    "packages/view"
+  ],
+  "scripts": {
+    "test": "vitest run --exclude '**/bench/**'",
+    "bench": "vitest run /bench/",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc -b packages/core/tsconfig.build.json packages/view/tsconfig.build.json",
+    "clean": "rm -rf packages/*/dist packages/*/*.tsbuildinfo out",
+    "examples": "for f in examples/*.ts; do echo \"== $f\"; vite-node \"$f\" || exit 1; done",
+    "lab": "vite-node apps/lab/build.ts",
+    "studio": "vite-node apps/lab/studio/serve.ts",
+    "report": "vite-node apps/lab/report/build.ts",
+    "beasts": "vite-node apps/lab/beasts/build.ts",
+    "sheet": "vite-node apps/lab/sprite-sheet.ts",
+    "gallery": "vite-node apps/lab/bench/body-gallery.ts",
+    "sanity:probe": "vite-node packages/core/bench/cli.ts probe",
+    "sanity:duels": "vite-node packages/core/bench/cli.ts duels",
+    "sanity:report": "vite-node packages/core/bench/cli.ts report",
+    "sanity:expect": "vite-node packages/core/bench/cli.ts expect",
+    "sanity:problems": "vite-node packages/core/bench/cli.ts problems",
+    "report:full": "vite-node apps/lab/report/build.ts --reports",
+    "docs:api": "vite-node scripts/api-doc.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.1",
+    "puppeteer-core": "^25.12.0",
+    "typescript": "^5.6.0",
+    "vite": "^5.4.21",
+    "vite-node": "^2.1.0",
+    "vitest": "^2.1.0"
+  }
+}

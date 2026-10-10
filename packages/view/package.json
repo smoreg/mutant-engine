@@ -1,0 +1,46 @@
+{
+  "name": "@mutant-engine/view",
+  "version": "0.1.0",
+  "description": "Layout, SVG and pixel sprites for @mutant-engine/core bodies: one source of truth for where parts attach.",
+  "license": "MIT",
+  "author": "Kirill Semenchenko",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "mutant-engine:source": "./index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "!dist/**/*.tsbuildinfo",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smoreg/mutant-engine.git",
+    "directory": "packages/view"
+  },
+  "homepage": "https://github.com/smoreg/mutant-engine#readme",
+  "keywords": [
+    "procedural",
+    "creature",
+    "mutation",
+    "body",
+    "roguelike",
+    "gamedev",
+    "anatomy",
+    "sprites"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@mutant-engine/core": "0.1.0"
+  }
+}

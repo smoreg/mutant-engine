@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>mutant-engine — студия</title>
+<script type="module" src="./main.ts"></script>
+</head>
+<body>
+<header class="top">
+  <h1>mutant-engine</h1>
+  <nav class="tabs big" id="tabs">
+    <button class="tab" data-tab="gen">Генератор</button>
+    <button class="tab on" data-tab="lab">Лаборатория</button>
+    <button class="tab" data-tab="arena">Арена</button>
+    <button class="tab" data-tab="zoo">Бестиарий</button>
+    <button class="tab" data-tab="muts">Мутации</button>
+    <button class="tab" data-tab="parts">Части</button>
+    <button class="tab" data-tab="edit">Редактор</button>
+  </nav>
+  <div class="top-right" id="top-right"></div>
+</header>
+<main id="page-gen" class="page gen" hidden>
+  <section class="gen-form" id="gen-form"></section>
+  <section class="gen-grid" id="gen-grid"></section>
+  <details class="gen-summary" id="gen-summary"><summary>сводка партии: гистограммы, семейства, потолок, нужды — с расползанием и без</summary><div id="gen-summary-out"></div></details>
+</main>
+<main id="page-lab" class="page">
+  <aside class="left">
+    <nav class="lab-modes" id="lab-modes">
+      <button class="tab on" data-mode="roll">Мутировать</button>
+      <button class="tab" data-mode="hand">Ручная мутация</button>
+      <button class="tab" data-mode="room">Операционная</button>
+    </nav>
+    <section class="controls" id="controls"></section>
+    <section class="place" id="place" hidden></section>
+    <section class="room" id="room" hidden></section>
+    <section class="tape" id="tape"></section>
+  </aside>
+  <section class="centre">
+    <div class="canvas-bar" id="canvas-bar"></div>
+    <div class="canvases" id="canvases"></div>
+    <div class="player" id="player"></div>
+    <div class="step-detail" id="step-detail"></div>
+  </section>
+  <aside class="right">
+    <section class="ops" id="ops" hidden></section>
+    <section class="heads" id="heads"></section>
+    <section class="numbers" id="numbers"></section>
+  </aside>
+  <div class="info-back" id="info" hidden></div>
+</main>
+<main id="page-arena" class="page arena" hidden>
+  <div class="row ar-bar" id="ar-bar"></div>
+  <div class="ar-grid">
+    <aside class="ar-card" id="ar-l"></aside>
+    <section class="ar-mid">
+      <div id="ar-fight"></div>
+      <div id="ar-strike-box" hidden></div>
+      <div id="ar-wounds" class="damage ar-wounds" hidden>
+        <div class="player" id="dmg-player"></div>
+        <div class="canvases dmg" id="dmg-canvas"></div>
+        <div class="ar-wgrid">
+          <section class="numbers" id="dmg-status"></section>
+          <div>
+            <details class="ar-more"><summary class="cap">раны: время, еда, руки, условный бой</summary><section class="controls" id="dmg-controls"></section></details>
+            <section class="tape" id="dmg-tape"></section>
+          </div>
+        </div>
+      </div>
+    </section>
+    <aside class="ar-card" id="ar-r"></aside>
+  </div>
+</main>
+<main id="page-zoo" class="page zoo" hidden>
+  <nav class="shelves" id="shelves">
+    <button class="tab" data-shelf="mine">Мои твари</button>
+    <button class="tab" data-shelf="myth">Мифические</button>
+    <button class="tab" data-shelf="living">Живая галерея</button>
+  </nav>
+  <section class="zoo-body" id="zoo-body"></section>
+</main>
+<main id="page-muts" class="page muts" hidden>
+  <aside class="muts-left" id="muts-left"></aside>
+  <section class="muts-edit" id="muts-edit"></section>
+</main>
+<main id="page-parts" class="page parts" hidden>
+  <section class="parts-bar">
+    <input type="search" id="parts-search" class="parts-search" autocomplete="off">
+    <div id="parts-chips" class="parts-chips"></div>
+  </section>
+  <div class="parts-body">
+    <section class="parts-grid-wrap" id="parts-grid"></section>
+    <aside class="parts-detail" id="parts-detail"></aside>
+  </div>
+</main>
+<main id="page-edit" class="page edit" hidden>
+  <aside class="ed-palette">
+    <input type="search" id="ed-search" class="ed-search" autocomplete="off">
+    <div id="ed-chips" class="chips ed-chips"></div>
+    <div id="ed-cards" class="ed-cards"></div>
+  </aside>
+  <section class="ed-centre">
+    <div class="canvas-bar ed-bar" id="ed-bar"></div>
+    <div class="ed-hint" id="ed-hint"></div>
+    <div class="ed-canvas" id="ed-canvas"></div>
+    <div class="ed-trash" id="ed-trash"></div>
+  </section>
+  <aside class="ed-side" id="ed-side"></aside>
+  <div class="ed-menu" id="ed-menu" hidden></div>
+</main>
+</body>
+</html>

@@ -1,0 +1,70 @@
+/** The words of the editor tab: one table, the page prints nothing of its own. */
+import type { AttachHow } from "@mutant-engine/core";
+
+export const EDIT_TEXT = {
+  search: "поиск части",
+  all: "все",
+  start: "начать с",
+  startHuman: "человек",
+  startSwamp: "мутант из Топи",
+  startKeep: "— текущий мутант —",
+  graph: "граф",
+  sprite: "спрайт",
+  undo: "отменить",
+  redo: "повторить",
+  copy: "копировать текст",
+  copied: "скопировано",
+  toLab: "открыть в лаборатории",
+  trash: "корзина: перетащи сюда часть тела, чтобы снять",
+  help: "Тащи часть из палитры на тело: подсвечены только места, куда модель её пускает. Клик по части тела — снять.",
+  helpTouch: "Долгий тап по части в палитре — и тащи на тело. Тап по части тела — снять.",
+  drop: "отпусти:",
+  refuse: "нельзя:",
+  pick: "куда именно?",
+  cancel: "отмена",
+  remove: "снять",
+  nothingToRemove: "эту часть нож не берёт",
+  places: "мест",
+  none: "мест нет",
+  stats: "показатели",
+  budgets: "бюджеты",
+  meat: "масса / мясо / потолок",
+  upkeep: "содержание",
+  control: "контроль: нагрузка / предел",
+  bulk: "габарит",
+  sound: "тело цело: validate чист",
+  broken: "validate нашёл",
+  history: "история",
+  empty: "команд нет: тело как на старте",
+  startRow: "старт",
+  rejected: "отклонено",
+  rollback: "откатить до этого шага",
+  hash: "хэш тела",
+} as const;
+
+/** A command of the history that is not an attach, by kind. */
+export const EDIT_CMD_RU = {
+  mutate: "мутация",
+  place: "вручную",
+  excise: "снято:",
+  eat: "съедено:",
+  cut: "отрезано:",
+  reshape: "снято:",
+  unfuse: "разъединено срастание",
+  unmutate: "снята мутация шага",
+  tick: "ходов:",
+  separate: "отделение",
+  sway: "сдвиг мозга",
+} as const;
+
+/** How a part goes on, as the drop menu names it. */
+export const HOW_RU: Record<AttachHow, string> = {
+  limb: "прирастить конечностью",
+  tumour: "нарост",
+  end: "переродить окончание",
+  head: "в голову",
+  cavity: "в полость",
+  growth: "на поверхность",
+  cover: "покров",
+  membrane: "натянуть перепонку",
+};

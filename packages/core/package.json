@@ -1,0 +1,43 @@
+{
+  "name": "@mutant-engine/core",
+  "version": "0.1.0",
+  "description": "A creature body as a multigraph: growth, mutation tables, injuries, surgery, breathing, senses and turn-based combat. Pure functions, seeded randomness, no DOM.",
+  "license": "MIT",
+  "author": "Kirill Semenchenko",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "mutant-engine:source": "./index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "!dist/**/*.tsbuildinfo",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smoreg/mutant-engine.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/smoreg/mutant-engine#readme",
+  "keywords": [
+    "procedural",
+    "creature",
+    "mutation",
+    "body",
+    "roguelike",
+    "gamedev",
+    "anatomy",
+    "sprites"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
+}
