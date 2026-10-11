@@ -14,8 +14,8 @@
     "bench": "vitest run /bench/",
     "typecheck": "tsc --noEmit",
     "build": "tsc -b packages/core/tsconfig.build.json packages/view/tsconfig.build.json",
-    "clean": "rm -rf packages/*/dist packages/*/*.tsbuildinfo out",
-    "examples": "for f in examples/*.ts; do echo \"== $f\"; vite-node \"$f\" || exit 1; done",
+    "clean": "node scripts/clean.mjs",
+    "examples": "node scripts/examples.mjs",
     "lab": "vite-node apps/lab/build.ts",
     "studio": "vite-node apps/lab/studio/serve.ts",
     "report": "vite-node apps/lab/report/build.ts",
@@ -28,14 +28,19 @@
     "sanity:expect": "vite-node packages/core/bench/cli.ts expect",
     "sanity:problems": "vite-node packages/core/bench/cli.ts problems",
     "report:full": "vite-node apps/lab/report/build.ts --reports",
-    "docs:api": "vite-node scripts/api-doc.ts"
+    "docs:api": "vite-node scripts/api-doc.ts",
+    "test:package": "npm run build && node scripts/check-package.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.20.1",
+    "esbuild": "^0.28.2",
     "puppeteer-core": "^25.12.0",
     "typescript": "^5.6.0",
-    "vite": "^5.4.21",
-    "vite-node": "^2.1.0",
-    "vitest": "^2.1.0"
+    "vite": "^7.3.7",
+    "vite-node": "^5.3.0",
+    "vitest": "^4.1.11"
+  },
+  "engines": {
+    "node": ">=22.13.0"
   }
 }

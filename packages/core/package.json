@@ -11,6 +11,46 @@
       "mutant-engine:source": "./index.ts",
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./body": {
+      "mutant-engine:source": "./api/body.ts",
+      "types": "./dist/api/body.d.ts",
+      "default": "./dist/api/body.js"
+    },
+    "./mutations": {
+      "mutant-engine:source": "./api/mutations.ts",
+      "types": "./dist/api/mutations.d.ts",
+      "default": "./dist/api/mutations.js"
+    },
+    "./combat": {
+      "mutant-engine:source": "./api/combat.ts",
+      "types": "./dist/api/combat.d.ts",
+      "default": "./dist/api/combat.js"
+    },
+    "./surgery": {
+      "mutant-engine:source": "./api/surgery.ts",
+      "types": "./dist/api/surgery.d.ts",
+      "default": "./dist/api/surgery.js"
+    },
+    "./life": {
+      "mutant-engine:source": "./api/life.ts",
+      "types": "./dist/api/life.d.ts",
+      "default": "./dist/api/life.js"
+    },
+    "./catalog": {
+      "mutant-engine:source": "./api/catalog.ts",
+      "types": "./dist/api/catalog.d.ts",
+      "default": "./dist/api/catalog.js"
+    },
+    "./rng": {
+      "mutant-engine:source": "./rng.ts",
+      "types": "./dist/rng.d.ts",
+      "default": "./dist/rng.js"
+    },
+    "./labels": {
+      "mutant-engine:source": "./labels.ts",
+      "types": "./dist/labels.d.ts",
+      "default": "./dist/labels.js"
     }
   },
   "main": "./dist/index.js",

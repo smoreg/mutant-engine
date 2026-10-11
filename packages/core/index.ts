@@ -57,3 +57,5 @@ export type { Part } from "./knife-ops.js";
 export * from "./strike.js";
 export * from "./policy.js";
 export * from "./battle.js";
+
+export * from "./labels.js";

@@ -5,7 +5,7 @@
  *
  *   npx vite-node examples/01-mutate.ts [seed]
  */
-import { applyMutation, bodyHash, derive, drawMutation, human, MUTATIONS, mutationRu, summarize, LabRng } from "@mutant-engine/core";
+import { applyMutation, bodyHash, derive, drawMutation, human, MUTATIONS, mutationLabel, summarize, LabRng } from "@mutant-engine/core";
 
 const seed = Number(process.argv[2] ?? 7);
 const rng = new LabRng(seed);
@@ -16,7 +16,7 @@ for (let i = 0; i < 12; i++) {
   const m = drawMutation(MUTATIONS, rng, { body });
   if (m === null) continue;
   const landed = applyMutation(body, m, rng);
-  console.log(`${landed === null ? "  missed" : "  landed"}  ${m.id} (${mutationRu(m.id)})`);
+  console.log(`${landed === null ? "  missed" : "  landed"}  ${m.id} (${mutationLabel(m.id)})`);
 }
 
 const after = summarize(derive(body));

@@ -52,7 +52,7 @@ All randomness is an `Rng` (`{ next(): number }`) passed in. `LabRng` is a seede
 ## Life: one clock
 
 Time passes through one function: bleeding and clotting, healing, hunger and its reserve, covers
-spreading, pain decaying, acid clearing, suffocation. A game calls it with the minutes that passed.
+spreading, pain decaying, acid clearing, suffocation. A game calls `elapse` once per simulation turn, supplying a harm record for the full lifecycle.
 
 Pain is relative to the body, burns from acid and wounds, and taxes control: a body in enough pain
 stops obeying itself.

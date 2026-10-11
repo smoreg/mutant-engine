@@ -1,11 +1,11 @@
 # Баланс бестиария
 
-> **Статус: замер, а не спецификация.** Числа сняты стендом [`packages/mutant/bench`](../packages/mutant/bench) на
-> ветке `bench/battle`. Каждый бой идёт через `runBattle` из [`battle.ts`](../packages/mutant/battle.ts) —
+> **Статус: замер, а не спецификация.** Числа сняты стендом `packages/mutant/bench` (historical document, not included) на
+> ветке `bench/battle`. Каждый бой идёт через `runBattle` из `battle.ts` (historical document, not included) —
 > своего боевого кода у стенда нет ни строки, и ни одно число здесь не придумано: всё
 > перемеривается одной командой. Что меряет сам бой — [`battle.md`](battle.md), удар —
 > [`strike.md`](strike.md), рану — [`damage.md`](damage.md), лестницу противников —
-> [`colosseum/arena.md`](colosseum/arena.md).
+> `colosseum/arena.md` (historical document, not included).
 >
 > **Половина цифр протухнет.** Прямо сейчас чинятся перегруз каналов у тварей, стартовая масса
 > выше потолка, удары желёз и отломок с мозгом. Поэтому отчёт разделён на две части: §6 — что

@@ -9,16 +9,26 @@ pixel sprite or as a diagram.
 ![bestiary](docs/lab-bestiary.png)
 
 > **Status: 0.1.** The model is large and tested (1300+ tests), but the public API
-> is wide and will change before 1.0. Player-facing strings are RU·EN; some
+> is wide and will change before 1.0. Mutation names and descriptions are RU·EN; some
 > operation labels and the lab UI are Russian only for now.
+
+## Install
+
+Download both `.tgz` packages from [Releases](https://github.com/smoreg/mutant-engine/releases) and install them together:
+
+```sh
+npm install ./mutant-engine-core-0.1.0.tgz ./mutant-engine-view-0.1.0.tgz
+```
+
+For simulation alone, install only core. See the [integration guide](docs/integration.md) for public module entries, custom catalogs, time, saves and supported environments.
 
 ## 30 seconds
 
 ```ts
-import { applyMutation, derive, drawMutation, human, LabRng, MUTATIONS, summarize } from "@mutant-engine/core";
+import { applyMutation, derive, drawMutation, human, SeededRng, MUTATIONS, summarize } from "@mutant-engine/core";
 import { framePng, renderPixels } from "@mutant-engine/view";
 
-const rng = new LabRng(7);               // every random draw goes through this
+const rng = new SeededRng(7);               // every random draw goes through this
 const body = human();
 for (let i = 0; i < 12; i++) {
   const m = drawMutation(MUTATIONS, rng, { body });
@@ -54,8 +64,9 @@ Same seed, same creature, on every machine.
 ## Run it
 
 ```bash
+# Node.js 22.13+
 npm install
-npm test               # 1300+ tests, ~2 min
+npm test               # 1300+ tests
 npm run typecheck
 npm run build          # packages/*/dist
 npm run examples       # examples/*.ts

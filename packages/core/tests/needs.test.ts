@@ -754,7 +754,8 @@ describe("bodies survive the collapse", () => {
     expect(on.brains).toBeGreaterThan(off.brains + 0.1);
     expect(on.cannotEat / on.bodies).toBeLessThanOrEqual(0.05);
     expect(on.overloaded).toBeLessThan(off.overloaded / 3);
-  });
+  // Seeded population check, not a performance budget. Vitest 4 enforces sync timeouts too.
+  }, 300_000);
 });
 
 // ---------------------------------------------------------------- holes the atlas found

@@ -166,3 +166,6 @@ export function recording(base: Rng, tape: number[]): Rng {
     },
   };
 }
+
+/** General-purpose name; LabRng remains available for existing integrations. */
+export { LabRng as SeededRng };
