@@ -175,7 +175,7 @@ interface ApiAnswer {
 function isSummary(x: unknown): x is CreatureSummary {
   if (typeof x !== "object" || x === null) return false;
   const c = x as Record<string, unknown>;
-  return typeof c.key === "string" && typeof c.name === "string" && typeof c.source === "string" && typeof c.bodyHash === "string" && ["seed", "mutations", "nodes", "heads", "humanoid"].every((k) => typeof c[k] === "number");
+  return typeof c.key === "string" && typeof c.name === "string" && typeof c.source === "string" && typeof c.bodyHash === "string" && ["seed", "mutations", "nodes", "heads", "humanoid"].every((k) => typeof c[k] === "number" && Number.isFinite(c[k]));
 }
 
 /** The api under `/api`: GET /health, GET /creatures, POST /batch, POST /creatures, PATCH and DELETE /creatures/:id. */
@@ -185,7 +185,7 @@ export function apiRoute(store: Store, method: string, path: string, body: unkno
   if (method === "GET" && path === "/creatures") return { status: 200, json: store.list() };
   if (method === "POST" && path === "/batch") {
     const b = body as { label?: unknown; params?: unknown; creatures?: unknown } | undefined;
-    if (b === undefined || typeof b.label !== "string" || !Array.isArray(b.creatures) || !b.creatures.every(isSummary)) return bad("a batch needs a label and creatures");
+    if (b == null || typeof b.label !== "string" || !Array.isArray(b.creatures) || !b.creatures.every(isSummary)) return bad("a batch needs a label and creatures");
     const id = store.saveBatch({ label: b.label, params: (b.params ?? null) as GenParams | null }, b.creatures, now);
     return { status: 200, json: { id, saved: b.creatures.length } };
   }
@@ -196,6 +196,7 @@ export function apiRoute(store: Store, method: string, path: string, body: unkno
   const m = /^\/creatures\/(\d+)$/.exec(path);
   if (m !== null) {
     const id = Number(m[1]);
+    if (!Number.isSafeInteger(id) || id < 1) return bad("invalid creature id");
     if (method === "DELETE") {
       store.remove(id);
       return { status: 200, json: { ok: true } };

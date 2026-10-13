@@ -4,4 +4,5 @@ import { defineConfig } from "vite";
 export default defineConfig({
   cacheDir: "out/.vite",
   resolve: { conditions: ["mutant-engine:source"] },
+  ssr: { resolve: { conditions: ["mutant-engine:source"] } },
 });

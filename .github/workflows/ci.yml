@@ -18,6 +18,8 @@ jobs:
       - run: npm ci
       - run: npm run typecheck
       - run: npm test
-      - run: npm run build
+      # Exercise source resolution before dist can hide broken workspace imports.
       - run: npm run examples
+      - run: npm run lab
+      - run: npm run build
       - run: npm run test:package

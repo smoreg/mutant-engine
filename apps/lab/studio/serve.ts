@@ -11,6 +11,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join, resolve } from "node:path";
 import { createServer } from "vite";
+import { jsonRequest } from "./http.js";
 import { Store, apiRoute } from "./db.js";
 import { overridesRoute, parseOverridesSource } from "./overrides.js";
 
@@ -25,6 +26,7 @@ const server = await createServer({
   root: resolve(import.meta.dirname, ".."),
   configFile: false,
   resolve: { conditions: ["mutant-engine:source"] },
+  ssr: { resolve: { conditions: ["mutant-engine:source"] } },
   server: { port, strictPort: true },
   plugins: [
     {
@@ -41,36 +43,13 @@ const server = await createServer({
           next();
         });
         s.middlewares.use("/api/overrides", (req, res) => {
-          let text = "";
-          req.on("data", (chunk: Buffer) => (text += chunk.toString("utf8")));
-          req.on("end", () => {
-            let answer;
-            try {
-              const body = text === "" ? undefined : (JSON.parse(text) as unknown);
-              answer = overridesRoute(req.method ?? "GET", body, () => parseOverridesSource(readFileSync(OVERRIDES, "utf8")) ?? {}, (t) => writeFileSync(OVERRIDES, t, "utf8"));
-            } catch (e) {
-              answer = { status: 400, json: { problems: [e instanceof Error ? e.message : String(e)] } };
-            }
-            res.statusCode = answer.status;
-            res.setHeader("content-type", "application/json");
-            res.end(JSON.stringify(answer.json));
-          });
+          jsonRequest(req, res, (body) => overridesRoute(req.method ?? "GET", body,
+            () => parseOverridesSource(readFileSync(OVERRIDES, "utf8")) ?? {},
+            (t) => writeFileSync(OVERRIDES, t, "utf8")));
         });
         s.middlewares.use("/api", (req, res) => {
-          let text = "";
-          req.on("data", (chunk: Buffer) => (text += chunk.toString("utf8")));
-          req.on("end", () => {
-            let answer;
-            try {
-              const body = text === "" ? undefined : (JSON.parse(text) as unknown);
-              answer = apiRoute(store, req.method ?? "GET", (req.url ?? "/").split("?")[0]!, body, new Date().toISOString());
-            } catch (e) {
-              answer = { status: 400, json: { error: e instanceof Error ? e.message : String(e) } };
-            }
-            res.statusCode = answer.status;
-            res.setHeader("content-type", "application/json");
-            res.end(JSON.stringify(answer.json));
-          });
+          jsonRequest(req, res, (body) => apiRoute(store, req.method ?? "GET",
+            (req.url ?? "/").split("?")[0]!, body, new Date().toISOString()));
         });
       },
     },

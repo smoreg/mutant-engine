@@ -522,7 +522,7 @@ export function checkMutations(
       const substance = (organs as Record<string, { substance?: unknown }>)[kind]!.substance;
       if (substance !== "flesh" && substance !== "trait") problems.push(`${m.id}: organ ${kind} has no substance (flesh or trait)`);
     }
-    if (!(m.chance > 0)) problems.push(`${m.id}: chance ${m.chance} is not above 0`);
+    if (!(Number.isFinite(m.chance) && m.chance > 0)) problems.push(`${m.id}: chance ${m.chance} is not finite and above 0`);
     for (const t of m.tags ?? []) if (!KNOWN_TAGS.has(t)) problems.push(`${m.id}: unknown tag ${String(t)}`);
     const entry = text[m.i18n];
     if (entry === undefined) problems.push(`${m.id}: no text for key ${m.i18n}`);

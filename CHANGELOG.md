@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- Fix source-only workspace resolution in tests, examples and the lab; verify before building in CI.
+- Reject invalid RNG ranges, dice and weights; never select zero-weight mutations or targets.
+- Validate studio overrides and storage input before mutation or persistence.
+- Decode HTTP UTF-8 once, limit request bodies and reject foreign-origin writes.
+- Document the audit and the combat mechanics not yet implemented.
+
 ## 0.1.0
 
 First public release. The API is wide and not yet stable; expect breaking changes before 1.0.

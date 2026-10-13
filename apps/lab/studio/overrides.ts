@@ -18,6 +18,7 @@ import {
   pruneOverride,
   type MutationOverride,
   LabRng,
+  ORGANS, SEGMENT_KINDS, TARGET_RULE_FIELDS,
 } from "@mutant-engine/core";
 
 export type Overrides = Record<string, MutationOverride>;
@@ -68,10 +69,24 @@ export function overrideProblems(o: Overrides): string[] {
   const problems: string[] = [];
   for (const id of Object.keys(o)) if (!BASE_MUTATIONS.some((m) => m.id === id)) problems.push(`${id}: no such row in the catalog`);
   for (const [id, e] of Object.entries(o)) {
+    if (typeof e !== "object" || e === null || Array.isArray(e)) {
+      problems.push(`${id}: override must be an object`);
+      continue;
+    }
+    for (const key of Object.keys(e)) if (!["disabled", "chance", "tags", "target", "ru", "en"].includes(key)) problems.push(`${id}: unknown field ${key}`);
+    if (e.disabled !== undefined && typeof e.disabled !== "boolean") problems.push(`${id}: disabled must be boolean`);
+    if (e.tags !== undefined && (!Array.isArray(e.tags) || !e.tags.every(t => typeof t === "string"))) problems.push(`${id}: tags must be strings`);
+    if (e.target !== undefined && typeof e.target === "object" && e.target !== null && !Array.isArray(e.target)) {
+      for (const key of Object.keys(e.target)) if (!(TARGET_RULE_FIELDS as readonly string[]).includes(key)) problems.push(`${id}: unknown target field ${key}`);
+      for (const key of ["toHead", "digests", "keepsCavity"] as const) if (e.target[key] !== undefined && typeof e.target[key] !== "boolean") problems.push(`${id}: ${key} must be boolean`);
+      if (e.target.minSize !== undefined && ![1,2,3].includes(e.target.minSize)) problems.push(`${id}: invalid minSize`);
+      if (e.target.kinds !== undefined && (!Array.isArray(e.target.kinds) || !e.target.kinds.every(k => typeof k === "string" && Object.hasOwn(SEGMENT_KINDS, k)))) problems.push(`${id}: invalid segment kinds`);
+      if (e.target.endings !== undefined && (!Array.isArray(e.target.endings) || !e.target.endings.every(k => typeof k === "string" && Object.hasOwn(ORGANS, k)))) problems.push(`${id}: invalid endings`);
+    }
     if (e.chance !== undefined && !(Number.isFinite(e.chance) && e.chance > 0)) problems.push(`${id}: chance ${String(e.chance)} is not above 0`);
     if (e.target !== undefined && (typeof e.target !== "object" || e.target === null || Array.isArray(e.target))) problems.push(`${id}: the target rule is not an object`);
-    if (e.ru !== undefined && e.ru.trim() === "") problems.push(`${id}: empty ru`);
-    if (e.en !== undefined && e.en.trim() === "") problems.push(`${id}: empty en`);
+    if (e.ru !== undefined && (typeof e.ru !== "string" || e.ru.trim() === "")) problems.push(`${id}: empty ru`);
+    if (e.en !== undefined && (typeof e.en !== "string" || e.en.trim() === "")) problems.push(`${id}: empty en`);
   }
   if (problems.length > 0) return problems;
   const catalog = BASE_MUTATIONS.map((m) => applyOverride(m, o[m.id]));
