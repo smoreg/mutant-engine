@@ -95,3 +95,12 @@ external directory, runs a deterministic creature through serialization, diagnos
 and rendering, checks the installed declarations using TypeScript NodeNext, and executes a browser bundle without Node globals or DOM.
 CI runs this in addition to source tests. This catches workspace-only imports and
 missing published files that source tests cannot detect.
+
+## Invalid random weights
+
+Random selection requires finite, nonnegative weights. `SeededRng.weighted`
+throws `RangeError` for an empty distribution, zero total, overflow or invalid
+weights. `drawWeighted` and `drawMutation` return `null` without consuming RNG
+when the total is zero; invalid weights throw `RangeError`. Catalog rows require
+a finite positive `chance`. Integer ranges and dice counts must be safe integers;
+invalid arguments are rejected before the generator advances.

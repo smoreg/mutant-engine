@@ -1331,13 +1331,19 @@ export function targets<K extends Op>(body: Body, op: K, payload: Payload<K>, ct
 export function drawWeighted(list: readonly Weighted[], rng: Rng): Target | null {
   if (list.length === 0) return null;
   let total = 0;
-  for (const w of list) total += w.weight;
+  for (const w of list) {
+    if (!Number.isFinite(w.weight) || w.weight < 0) throw new RangeError("invalid target weight");
+    total += w.weight;
+  }
+  if (!Number.isFinite(total)) throw new RangeError("target weight overflow");
+  if (total === 0) return null;
   let r = rng.next() * total;
   for (const w of list) {
     r -= w.weight;
     if (r < 0) return w.target;
   }
-  return list[list.length - 1]!.target;
+  for (let i = list.length - 1; i >= 0; i--) if (list[i]!.weight > 0) return list[i]!.target;
+  return null;
 }
 
 /** A weighted draw over `targets`; one rng call, none when there is nothing to choose. */

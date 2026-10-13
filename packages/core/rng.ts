@@ -97,6 +97,7 @@ export class LabRng implements Rng {
 
   /** [lo, hi] inclusive */
   int(lo: number, hi: number): number {
+    if (!Number.isSafeInteger(lo) || !Number.isSafeInteger(hi) || hi < lo || !Number.isSafeInteger(hi - lo + 1)) throw new RangeError("invalid integer range");
     return lo + Math.floor(this.next() * (hi - lo + 1));
   }
 
@@ -112,6 +113,7 @@ export class LabRng implements Rng {
 
   /** n dice of `sides`, e.g. roll(2, 6) == 2d6 */
   roll(n: number, sides: number): number {
+    if (!Number.isSafeInteger(n) || n < 0 || !Number.isSafeInteger(sides) || sides < 1 || !Number.isSafeInteger(n * sides)) throw new RangeError("invalid dice");
     let sum = 0;
     for (let i = 0; i < n; i++) sum += this.die(sides);
     return sum;
@@ -137,13 +139,20 @@ export class LabRng implements Rng {
   weighted<K extends string>(table: Record<K, number>): K {
     const keys = Object.keys(table) as K[];
     let total = 0;
-    for (const k of keys) total += table[k];
-    let r = this.next() * total;
     for (const k of keys) {
-      r -= table[k];
-      if (r <= 0) return k;
+      if (!Number.isFinite(table[k]) || table[k] < 0) throw new RangeError("invalid weight");
+      total += table[k];
     }
-    return keys[keys.length - 1]!;
+    if (!Number.isFinite(total) || total <= 0) throw new RangeError("weights need a finite positive total");
+    let r = this.next() * total;
+    let last = keys[0]!;
+    for (const k of keys) {
+      if (table[k] === 0) continue;
+      last = k;
+      r -= table[k];
+      if (r < 0) return k;
+    }
+    return last; // Floating-point rounding can land on the upper boundary.
   }
 
   /** An independent stream: the salt touches every state word, and twelve warm-up draws are thrown away. */

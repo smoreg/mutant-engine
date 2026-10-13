@@ -30,6 +30,7 @@ export async function buildPage(opts: { root: string; name: string; outPath: str
       configFile: false,
       // The workspace packages from their sources: the lab never waits for a build.
       resolve: { conditions: ["mutant-engine:source"] },
+      ssr: { resolve: { conditions: ["mutant-engine:source"] } },
       logLevel: "warn",
       base: "./",
       build: {

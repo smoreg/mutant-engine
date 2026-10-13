@@ -1280,13 +1280,19 @@ export function drawMutation(catalog: readonly Mutation[], rng: Rng, opts: DrawO
   if (list.length === 0) return null;
   const weights = drawWeights(list, opts);
   let total = 0;
-  for (const w of weights) total += w;
+  for (const w of weights) {
+    if (!Number.isFinite(w) || w < 0) throw new RangeError("invalid mutation weight");
+    total += w;
+  }
+  if (!Number.isFinite(total)) throw new RangeError("mutation weight overflow");
+  if (total === 0) return null;
   let r = rng.next() * total;
   for (let i = 0; i < list.length; i++) {
     r -= weights[i]!;
     if (r < 0) return list[i]!;
   }
-  return list[list.length - 1]!;
+  for (let i = weights.length - 1; i >= 0; i--) if (weights[i]! > 0) return list[i]!;
+  return null;
 }
 
 /** Whether the mutation's payload names only kinds the tables know; the catalog check reads it. */
